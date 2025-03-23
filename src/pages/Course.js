@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Spinner, Alert, Row, Col, Button, Card } from "react-bootstrap";
-import "../styles/Course.css";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import "../styles/Course.css";
 
 export default function Course() {
-  const [searchParams] = useSearchParams();
+  const { courseId } = useParams(); // Get courseId from route
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -19,40 +18,27 @@ export default function Course() {
         setLoading(true);
         setError("");
 
-        const requestData = {
-          topic: searchParams.get("topic") || "flutter",
-          description: searchParams.get("description") || "state management",
-          category: searchParams.get("category") || "Technical & Programming",
-          difficulty: searchParams.get("difficulty") || "Beginner",
-          chapters: parseInt(searchParams.get("chapters") || 3),
-          tone_output_style: searchParams.get("tone_output_style") || "Educational",
-        };
+        const res = await fetch(`http://127.0.0.1:8000/get-course/${courseId}`);
+        if (!res.ok) throw new Error("Course not found");
 
-        console.log("🟢 Sending API request:", requestData);
-        const res = await axios.post("http://127.0.0.1:8000/generate-learning-path/", requestData);
-        console.log("🟢 API Response:", res.data);
-
-        if (res.data) {
-          setCourse(res.data);
-        } else {
-          setError("No course data found. Try a different topic.");
-        }
+        const data = await res.json();
+        setCourse(data);
       } catch (error) {
-        console.error("🔴 API Error:", error);
-        setError("Failed to fetch course data.");
+        console.error("Fetch error:", error);
+        setError("Failed to fetch course.");
       } finally {
         setLoading(false);
       }
     }
 
     fetchCourse();
-  }, [searchParams]);
+  }, [courseId]);
 
   if (loading) {
     return (
       <Container className="text-center mt-4">
         <Spinner animation="border" />
-        <p>Generating course...</p>
+        <p>Loading course...</p>
       </Container>
     );
   }
@@ -67,18 +53,14 @@ export default function Course() {
 
   return (
     <Container fluid className="course-container">
-      {/* Back Button */}
       <Button variant="secondary" className="mb-3 back-button" onClick={() => navigate("/")}>
         ⬅️ Back to Home
       </Button>
 
-      {/* Course Header */}
       <h2 className="course-title">{course.course_title}</h2>
       <p className="course-description">{course.description}</p>
 
-      {/* Sidebar & Content Layout */}
       <Row>
-        {/* Sidebar Navigation */}
         <Col md={3} className="sidebar">
           {course.chapters.map((chapter, index) => (
             <Button
@@ -92,14 +74,11 @@ export default function Course() {
           ))}
         </Col>
 
-        {/* Main Content */}
         <Col md={9} className="content-area">
           {course.chapters.length > 0 && (
             <>
-              {/* Chapter Title */}
               <h3 className="chapter-title">{course.chapters[selectedChapter].chapter_title}</h3>
 
-              {/* Video Carousel */}
               <div className="video-carousel-container">
                 <Button
                   variant="light"
@@ -137,7 +116,6 @@ export default function Course() {
                 </Button>
               </div>
 
-              {/* Study Notes - Improved Formatting */}
               <div className="study-notes">
                 <h4>📖 Study Notes:</h4>
                 <div dangerouslySetInnerHTML={{ __html: formatStudyNotes(course.chapters[selectedChapter].study_notes) }} />
@@ -150,12 +128,11 @@ export default function Course() {
   );
 }
 
-// ✅ Function to Format Study Notes
 const formatStudyNotes = (notes) => {
   return notes
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // Bold **text**
-    .replace(/\n\s*-\s*(.*?)(?=\n|$)/g, "<li>$1</li>") // Bullet List
-    .replace(/\n\s*\d+\.\s*(.*?)(?=\n|$)/g, "<li>$1</li>") // Numbered List
-    .replace(/`([^`]+)`/g, "<code>$1</code>") // Inline Code
-    .replace(/\n/g, "<br/>"); // Preserve Line Breaks
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\n\s*-\s*(.*?)(?=\n|$)/g, "<li>$1</li>")
+    .replace(/\n\s*\d+\.\s*(.*?)(?=\n|$)/g, "<li>$1</li>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\n/g, "<br/>");
 };
