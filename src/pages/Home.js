@@ -52,16 +52,19 @@ export default function Home() {
       // const course_id = s3_uri.split("/").pop().replace(".json", "");
 
       // navigate("/courses", { state: { openCourseId: course_id } });
-      const query = new URLSearchParams({
-        topic,
-        description,
-        category,
-        difficulty,
-        chapters: chapters.toString(),
-        tone_output_style: toneOutputStyle,
-      }).toString();
+      // const query = new URLSearchParams({
+      //   topic,
+      //   description,
+      //   category,
+      //   difficulty,
+      //   chapters: chapters.toString(),
+      //   tone_output_style: toneOutputStyle,
+      // }).toString();
   
-      navigate(`/course?${query}`);
+      // navigate(`/course?${query}`);
+      const { s3_uri } = await uploadRes.json();
+      const course_id = s3_uri.split("/").pop().replace(".json", "");
+      navigate(`/course/${course_id}`);
 
     } catch (err) {
       console.error("Error:", err);
@@ -78,6 +81,7 @@ export default function Home() {
           <h2 className="form-title">📚 LearnHub - AI-Powered Video Courses</h2>
           <Form>
             <Form.Group className="mb-3">
+            <Form.Label>Topic Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter a topic..."
@@ -87,6 +91,7 @@ export default function Home() {
             </Form.Group>
 
             <Form.Group className="mb-3">
+            <Form.Label>Description</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Short description..."
@@ -105,6 +110,7 @@ export default function Home() {
                 <option>Creative Writing & Literature</option>
                 <option>Business & Finance</option>
                 <option>Health & Medicine</option>
+                <option>General</option>
               </Form.Select>
             </Form.Group>
 
