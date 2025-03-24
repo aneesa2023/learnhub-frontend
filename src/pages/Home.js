@@ -48,23 +48,22 @@ export default function Home() {
       });
 
       if (!uploadRes.ok) throw new Error("Failed to upload course to S3");
-      // const { s3_uri } = await uploadRes.json();
-      // const course_id = s3_uri.split("/").pop().replace(".json", "");
-
-      // navigate("/courses", { state: { openCourseId: course_id } });
-      // const query = new URLSearchParams({
-      //   topic,
-      //   description,
-      //   category,
-      //   difficulty,
-      //   chapters: chapters.toString(),
-      //   tone_output_style: toneOutputStyle,
-      // }).toString();
-  
-      // navigate(`/course?${query}`);
       const { s3_uri } = await uploadRes.json();
       const course_id = s3_uri.split("/").pop().replace(".json", "");
-      navigate(`/course/${course_id}`);
+
+      navigate("/courses", { state: { openCourseId: course_id } });
+      const query = new URLSearchParams({
+        topic,
+        description,
+        category,
+        difficulty,
+        chapters: chapters.toString(),
+        tone_output_style: toneOutputStyle,
+      }).toString();
+  
+      navigate(`/course?${query}`);
+  
+      // navigate(`/course/${course_id}`);
 
     } catch (err) {
       console.error("Error:", err);

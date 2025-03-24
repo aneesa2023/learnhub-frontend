@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Spinner, Alert, Row, Col, Button, Card } from "react-bootstrap";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Container, Spinner, Alert, Row, Col, Button } from "react-bootstrap";
 import MainLayout from "../components/MainLayout";
 import "../styles/Course.css";
 
@@ -11,6 +10,7 @@ export default function CourseDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedChapter, setSelectedChapter] = useState(0);
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
 
   useEffect(() => {
     async function fetchCourse() {
@@ -32,6 +32,7 @@ export default function CourseDetail() {
 
   const handleChapterChange = (index) => {
     setSelectedChapter(index);
+    setActiveVideoIndex(0); // Reset to first video on chapter switch
   };
 
   if (loading) {
@@ -52,6 +53,20 @@ export default function CourseDetail() {
       </MainLayout>
     );
   }
+
+  if (!course || !course.chapters) {
+    return (
+      <MainLayout>
+        <Container className="text-center mt-4">
+          <p>No course data found.</p>
+        </Container>
+      </MainLayout>
+    );
+  }
+
+  const currentChapter = course.chapters[selectedChapter];
+  const videos = currentChapter?.videos?.videos || [];
+  const activeVideo = videos[activeVideoIndex];
 
   return (
     <MainLayout>
@@ -74,62 +89,50 @@ export default function CourseDetail() {
           </Col>
 
           <Col md={9} className="content-area">
-            {course.chapters.length > 0 && (
-              <>
-                <h3 className="chapter-title">{course.chapters[selectedChapter].chapter_title}</h3>
+            <h3 className="chapter-title">{currentChapter.chapter_title}</h3>
 
-                <div className="video-carousel-container">
-                  <Button
-                    variant="light"
-                    className="carousel-arrow left"
-                    onClick={() => {
-                      document.getElementById("videoScroll").scrollLeft -= 300;
-                    }}
-                  >
-                    <FaArrowLeft />
-                  </Button>
+            {videos.length > 0 && (
+              <div className="video-player-section mb-4">
+                <h5 className="mb-3">🎥 {currentChapter.chapter_title}</h5>
 
-                  <div id="videoScroll" className="video-carousel">
-                    {course.chapters[selectedChapter].videos?.videos.map((video, index) => (
-                      <Card key={index} className="video-card">
-                        <Card.Img variant="top" src={video.thumbnail} />
-                        <Card.Body>
-                          <Card.Title>{video.video_title}</Card.Title>
-                          <Card.Subtitle className="mb-2 text-muted">{video.channel_name}</Card.Subtitle>
-                          <Button
-                            variant="primary"
-                            href={video.video_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Watch on YouTube
-                          </Button>
-                        </Card.Body>
-                      </Card>
-                    ))}
-                  </div>
-
-                  <Button
-                    variant="light"
-                    className="carousel-arrow right"
-                    onClick={() => {
-                      document.getElementById("videoScroll").scrollLeft += 300;
-                    }}
-                  >
-                    <FaArrowRight />
-                  </Button>
+                <div className="video-responsive mb-3" style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden" }}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${activeVideo.video_id}`}
+                    title={activeVideo.video_title}
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                 </div>
 
-                <div className="study-notes">
-                  <h4>📖 Study Notes:</h4>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: formatStudyNotes(course.chapters[selectedChapter].study_notes),
-                    }}
-                  />
+                <div className="mb-2">
+                  <h6>{activeVideo.video_title}</h6>
+                  <p className="text-muted mb-1">{activeVideo.channel_name}</p>
                 </div>
-              </>
+
+                <div className="d-flex flex-wrap gap-2 mb-3">
+                  {videos.map((_, index) => (
+                    <Button
+                      key={index}
+                      variant={index === activeVideoIndex ? "primary" : "outline-primary"}
+                      onClick={() => setActiveVideoIndex(index)}
+                    >
+                      Video {index + 1}
+                    </Button>
+                  ))}
+                </div>
+              </div>
             )}
+
+            <div className="study-notes">
+              <h4>📖 Study Notes:</h4>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: formatStudyNotes(currentChapter.study_notes),
+                }}
+              />
+            </div>
           </Col>
         </Row>
       </Container>
