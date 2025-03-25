@@ -1,7 +1,8 @@
 // src/pages/Home.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Row, Col } from "react-bootstrap";
+import { FaSearch, FaRobot, FaPlayCircle } from "react-icons/fa";
 import MainLayout from "../components/MainLayout";
 
 export default function Home() {
@@ -75,6 +76,46 @@ export default function Home() {
 
   return (
     <MainLayout>
+       {/* 🧠 How It Works Section */}
+       <div className="my-5">
+        <h3 className="mb-4 text-center">🚀 How LearnHub Works</h3>
+        <Row className="g-4">
+          <Col md={4}>
+            <Card className="h-100 text-center p-3 shadow-sm">
+              <FaSearch size={40} className="mb-3 text-primary" />
+              <Card.Body>
+                <Card.Title>1. Enter a Topic</Card.Title>
+                <Card.Text>
+                  Type in a topic you're curious about. Choose the number of chapters, category, tone, and difficulty level.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card className="h-100 text-center p-3 shadow-sm">
+              <FaRobot size={40} className="mb-3 text-success" />
+              <Card.Body>
+                <Card.Title>2. AI Builds the Course</Card.Title>
+                <Card.Text>
+                  Our AI generates structured chapters, notes, and finds top YouTube videos related to your topic.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card className="h-100 text-center p-3 shadow-sm">
+              <FaPlayCircle size={40} className="mb-3 text-danger" />
+              <Card.Body>
+                <Card.Title>3. Start Learning</Card.Title>
+                <Card.Text>
+                  Watch curated videos, read detailed study notes, and explore chapter-wise learning paths—all in one place.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+
       <Card className="form-card">
         <Card.Body>
           <h2 className="form-title">📚 LearnHub - AI-Powered Video Courses</h2>
