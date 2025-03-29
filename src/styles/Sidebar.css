@@ -21,13 +21,13 @@
 
 /* On hover, slightly darker border */
 .sidebar .nav-link:hover {
-  background-color: #e0caff;  /* Slightly deeper purple */
+  background-color: #e0caffa2;  /* Slightly deeper purple */
   color: #7b2cbf;
 }
 
 /* Active tab */
 .sidebar .nav-link.active {
-  background-color: #7b2cbf;
+  background-color: #7a2cbfb5;
   color: white !important;
   font-weight: 600;
 }

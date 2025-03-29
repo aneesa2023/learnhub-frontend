@@ -32,7 +32,7 @@ function CourseList() {
                 title: courseData.course_title,
                 description: courseData.description || "No description provided.",
                 difficulty: courseData.difficulty || "Unknown",
-                category: courseData.category || "General",
+                category: courseData.category || "Technical",
                 chapters: courseData.chapters?.length || 0,
                 createdAt: new Date(courseData.metadata?.generated_at || Date.now()),
               };
@@ -90,7 +90,7 @@ function CourseList() {
                 <Card className="shadow-sm h-100 border-0" style={{ borderRadius: "12px" }}>
                   <Card.Body>
                     <div className="d-flex justify-content-between mb-2">
-                      <Badge bg="info" className="text-uppercase">{category || "General"}</Badge>
+                      <Badge bg="info" className="text-uppercase">{category}</Badge>
                       <Badge bg="light" text="dark" className="border">{difficulty}</Badge>
                     </div>
                     <Card.Title className="fw-bold text-capitalize">{title}</Card.Title>

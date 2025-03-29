@@ -1,4 +1,3 @@
-// src/pages/Home.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";

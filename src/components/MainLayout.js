@@ -2,7 +2,6 @@ import React from 'react';
 import NavbarComponent from './NavbarComponent';
 import Sidebar from './Sidebar';
 import '../styles/Home.css'; 
-// import Header from "./Header";
 
 export default function MainLayout({ children, hideSidebar = false }) {
   return (

@@ -38,9 +38,9 @@ export default function CreateCourse() {
       alert("Please enter a topic.");
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       const response = await fetch("http://127.0.0.1:8000/generate-learning-path/", {
         method: "POST",
@@ -54,11 +54,11 @@ export default function CreateCourse() {
           tone_output_style: toneOutputStyle,
         }),
       });
-
+  
       if (!response.ok) throw new Error("Failed to generate course");
-
+  
       const course = await response.json();
-
+  
       const uploadRes = await fetch("http://127.0.0.1:8000/upload-course-to-s3", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,14 +67,13 @@ export default function CreateCourse() {
           filename: course.course_title.replace(/\s+/g, "_") + "_" + Date.now(),
         }),
       });
-
+  
       if (!uploadRes.ok) throw new Error("Failed to upload course to S3");
-
+  
       const { course_id } = await uploadRes.json();
-      setToastMsg("🎉 Learning path generated and uploaded successfully!");
-      setShowToast(true);
-
-      setTimeout(() => navigate(`/course/${course_id}`), 2000); // redirect after toast
+  
+      // 🔥 Immediate navigation to Course Detail
+      navigate(`/course/${course_id}`);
     } catch (err) {
       console.error("❌ Error:", err);
       setToastMsg("❌ Something went wrong. Please try again.");
@@ -83,6 +82,7 @@ export default function CreateCourse() {
       setLoading(false);
     }
   };
+  
 
   return (
     <MainLayout>
@@ -197,7 +197,7 @@ export default function CreateCourse() {
                   onClick={handleGenerateCourse}
                   disabled={loading}
                   style={{
-                    backgroundColor: "#7b2cbf",
+                    backgroundColor: 'rgba(122, 44, 191, 0.7) ',
                     border: "none",
                     borderRadius: "10px",
                     padding: "12px 20px",
