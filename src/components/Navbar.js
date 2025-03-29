@@ -7,7 +7,10 @@ export default function NavbarComponent() {
       <Container>
         <Navbar.Brand as={Link} to="/">LearnHub</Navbar.Brand>
         <Nav>
-          <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="/">Create</Nav.Link>
+        </Nav>
+        <Nav>
+        <Nav.Link as={Link} to="/">Home</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

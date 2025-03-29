@@ -132,3 +132,42 @@
   padding-left: 1rem;
   list-style-type: disc;
 }
+
+.course-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 1rem;
+  color: #7b2cbf;
+}
+
+.chapter-btn {
+  border-radius: 8px;
+  text-align: left;
+  margin-bottom: 10px;
+  font-weight: 500;
+  padding: 12px 16px;
+}
+
+.chapter-btn.active,
+.chapter-btn:hover {
+  background-color: #7b2cbf !important;
+  color: white !important;
+}
+
+.video-player-section iframe {
+  border-radius: 10px;
+}
+
+.study-notes-html p,
+.course-summary-html p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.study-notes-html code {
+  background: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
+}

@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import CourseList from './pages/CourseList';
 import CourseDetail from './pages/CourseDetail';
 import Course from "./pages/Course";
+import CreateCourse from './pages/CreateCourse';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/courses" element={<CourseList />} />
         <Route path="/course" element={<Course />} />
         <Route path="/course/:courseId" element={<CourseDetail />} />
+        <Route path="/create" element={<CreateCourse />} />
 
       </Routes>
     </Router>

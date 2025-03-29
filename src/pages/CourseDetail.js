@@ -68,7 +68,7 @@ export default function CourseDetail() {
 
   if (loading) {
     return (
-      <MainLayout>
+      <MainLayout hideSidebar={true}>
         <Container className="text-center mt-4">
           <Spinner animation="border" />
           <p>Loading course...</p>
@@ -105,43 +105,41 @@ export default function CourseDetail() {
 
   return (
     <MainLayout>
-      <Container fluid className="course-container">
-        <h2 className="course-title">{course.course_title}</h2>
-        <p className="course-description">{course.description}</p>
-
+      <Container fluid className="px-4 py-4">
         <Row>
-          <Col md={3} className="sidebar">
-            {course.chapters.map((chapter, index) => (
-              <Button
-                key={index}
-                variant={selectedChapter === index ? "primary" : "light"}
-                className={`chapter-btn ${
-                  selectedChapter === index ? "active" : ""
-                }`}
-                onClick={() => handleChapterChange(index)}
-              >
-                {`${chapter.chapter_number}. ${chapter.chapter_title}`}
-              </Button>
-            ))}
+          {/* Sidebar */}
+          <Col md={3}>
+            <h5 className="text-uppercase fw-bold mb-3">Chapters</h5>
+            <div className="d-flex flex-column gap-2">
+              {course.chapters.map((chapter, index) => (
+                <Button
+                  key={index}
+                  variant={selectedChapter === index ? "primary" : "outline-secondary"}
+                  onClick={() => handleChapterChange(index)}
+                  className="text-start"
+                >
+                  {`${chapter.chapter_number}. ${chapter.chapter_title}`}
+                </Button>
+              ))}
+            </div>
           </Col>
 
-          <Col md={9} className="content-area">
-            <h3 className="chapter-title">{currentChapter.chapter_title}</h3>
+          {/* Content */}
+          <Col md={9}>
+            <Card className="shadow-sm p-4">
+              <h3 className="fw-bold mb-3">{currentChapter.chapter_title}</h3>
 
-            {isOverview && (
-              <>
-                <div className="chapter-section mb-4">
-                  <h4>🎯 Learning Objectives</h4>
+              {isOverview && (
+                <>
+                  <h5 className="text-secondary">🎯 Learning Objectives</h5>
                   <ul>
-                    {currentChapter.learning_objectives?.map((obj, idx) => (
+                    {currentChapter.learning_objectives.map((obj, idx) => (
                       <li key={idx}>{obj}</li>
                     ))}
                   </ul>
-                </div>
 
-                <div className="chapter-section mb-4">
-                  <h4>🧠 Key Concepts</h4>
-                  <Table striped bordered hover>
+                  <h5 className="text-secondary mt-4">🧠 Key Concepts</h5>
+                  <Table bordered responsive>
                     <thead>
                       <tr>
                         <th>Concept</th>
@@ -149,127 +147,84 @@ export default function CourseDetail() {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentChapter.key_concepts?.map((concept, idx) => (
+                      {currentChapter.key_concepts.map((c, idx) => (
                         <tr key={idx}>
-                          <td>{concept.title}</td>
-                          <td>{concept.explanation}</td>
+                          <td>{c.title}</td>
+                          <td>{c.explanation}</td>
                         </tr>
                       ))}
                     </tbody>
                   </Table>
-                </div>
-              </>
-            )}
+                </>
+              )}
 
-            {!isOverview && !isSummary && videos.length > 0 && (
-              <div className="video-player-section mb-4">
-                {/* <h5 className="mb-3">🎥 {currentChapter.chapter_title}</h5> */}
+              {!isOverview && !isSummary && (
+                <>
+                  {activeVideo && (
+                    <>
+                      <div className="video-wrapper mb-3">
+                        <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                          <iframe
+                            src={`https://www.youtube.com/embed/${activeVideo.video_id}`}
+                            title={activeVideo.video_title}
+                            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                            frameBorder="0"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      </div>
 
-                <div
-                  className="video-responsive mb-3"
-                  style={{
-                    position: "relative",
-                    paddingBottom: "56.25%",
-                    height: 0,
-                    overflow: "hidden",
-                  }}
-                >
-                  <iframe
-                    src={`https://www.youtube.com/embed/${activeVideo.video_id}`}
-                    title={activeVideo.video_title}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-
-                <div className="mb-2">
-                  <h6>{activeVideo.video_title}</h6>
-                  <p className="text-muted mb-1">{activeVideo.channel_name}</p>
-                </div>
-
-                <div className="d-flex flex-wrap gap-2 mb-3">
-                  {videos.map((_, index) => (
-                    <Button
-                      key={index}
-                      variant={
-                        index === activeVideoIndex
-                          ? "primary"
-                          : "outline-primary"
-                      }
-                      onClick={() => setActiveVideoIndex(index)}
-                    >
-                      Video {index + 1}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {!isOverview && !isSummary && (
-              <Card className="p-3 mt-4 shadow-sm">
-                <Card.Title className="mb-3">📖 Study Notes</Card.Title>
-                <Card.Text>
-                  <div
-                    className="study-notes-html"
-                    dangerouslySetInnerHTML={{
-                      __html: formatStudyNotes(currentChapter.study_notes),
-                    }}
-                  />
-                </Card.Text>
-              </Card>
-            )}
-
-            {isSummary && (
-              <>
-                <div className="chapter-section mb-4">
-                  {/* <h4>📘 Course Summary</h4> */}
-                  <div
-                    className="course-summary-html"
-                    dangerouslySetInnerHTML={{
-                      __html: formatCourseSummary(
-                        course.learning_path_summary?.course_summary
-                      ),
-                    }}
-                  />
-                </div>
-
-                <div className="chapter-section mb-4">
-                  <h4>📚 Recommended Study Links</h4>
-                  <ul>
-                    {course.learning_path_summary?.recommended_study_links?.map(
-                      (link, idx) => (
-                        <li key={idx}>
-                          <a
-                            href={link}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                      <div className="d-flex flex-wrap gap-2 mb-4">
+                        {videos.map((_, index) => (
+                          <Button
+                            key={index}
+                            variant={index === activeVideoIndex ? "primary" : "outline-primary"}
+                            onClick={() => setActiveVideoIndex(index)}
                           >
-                            {link}
-                          </a>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
+                            Video {index + 1}
+                          </Button>
+                        ))}
+                      </div>
+                    </>
+                  )}
 
-                <div className="chapter-section mb-4">
-                  <h4>🚀 Next Steps</h4>
+                  <h5 className="text-secondary">📖 Study Notes</h5>
+                  <div
+                    className="study-notes"
+                    dangerouslySetInnerHTML={{ __html: formatStudyNotes(currentChapter.study_notes) }}
+                  />
+                </>
+              )}
+
+              {isSummary && (
+                <>
+                  <h5 className="text-secondary">📘 Summary</h5>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: formatCourseSummary(course.learning_path_summary?.course_summary),
+                    }}
+                  />
+
+                  <h5 className="text-secondary mt-4">📚 Recommended Links</h5>
                   <ul>
-                    {currentChapter.practical_applications?.map((step, idx) => (
+                    {course.learning_path_summary?.recommended_study_links.map((link, idx) => (
+                      <li key={idx}>
+                        <a href={link} target="_blank" rel="noopener noreferrer">
+                          {link}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <h5 className="text-secondary mt-4">🚀 Next Steps</h5>
+                  <ul>
+                    {currentChapter.practical_applications.map((step, idx) => (
                       <li key={idx}>{step}</li>
                     ))}
                   </ul>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </Card>
           </Col>
         </Row>
       </Container>
@@ -279,30 +234,26 @@ export default function CourseDetail() {
 
 const formatStudyNotes = (notes) => {
   if (!notes) return "";
-
-  const paragraphs = notes.split(/\n{2,}/).map((p) => `<p>${p.trim()}</p>`);
-
-  return paragraphs
+  return notes
+    .split(/\n{2,}/)
+    .map((p) => `<p>${p.trim()}</p>`)
     .join("")
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/<p>- (.*?)<\/p>/g, "<ul><li>$1</li></ul>")
-    .replace(/<p>\d+\. (.*?)<\/p>/g, "<ol><li>$1</li></ol>")
     .replace(/<\/ul><ul>/g, "")
+    .replace(/<p>\d+\. (.*?)<\/p>/g, "<ol><li>$1</li></ol>")
     .replace(/<\/ol><ol>/g, "");
 };
 
 const formatCourseSummary = (text) => {
   if (!text) return "";
-
-  const formatted = text
-    .split(/\n{2,}/) // Split by double newlines for paragraphs
+  return text
+    .split(/\n{2,}/)
     .map((para) => `<p>${para.trim()}</p>`)
     .join("")
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // bold
-    .replace(/- (.*?)(?=\n|$)/g, "<li>$1</li>"); // bulleted lines
-
-  return formatted
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/- (.*?)(?=\n|$)/g, "<li>$1</li>")
     .replace(/<li>/g, "<ul><li>")
     .replace(/<\/li>(?!<li>)/g, "</li></ul>");
 };

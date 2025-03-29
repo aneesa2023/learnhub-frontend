@@ -14,3 +14,11 @@
     min-height: 48px;
   }
   
+  .card-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+  .card-text {
+    font-size: 0.9rem;
+  }
+  

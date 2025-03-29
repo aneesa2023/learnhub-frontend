@@ -24,15 +24,72 @@
   }
   
   .form-card {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
     border-radius: 10px;
-    background: #ffffff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
   }
+  
+  h4.form-title {
+    font-weight: 600;
+    text-align: center;
+  }  
   
   .generate-button {
     width: 100%;
+  }
+  
+  .how-it-works-container {
+    text-align: center;
+  }
+  
+  .steps-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    position: relative;
+    gap: 2rem;
+  }
+  
+  .step {
+    flex: 1 1 250px;
+    min-width: 220px;
+    max-width: 300px;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    position: relative;
+  }
+  
+  .icon-circle {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+  }
+  
+  .connector-line {
+    width: 30px;
+    height: 4px;
+    background: #dee2e6;
+    margin-top: 2.2rem;
+    border-radius: 2px;
+  }
+  
+  @media (max-width: 768px) {
+    .steps-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .connector-line {
+      width: 4px;
+      height: 30px;
+    }
   }
   
