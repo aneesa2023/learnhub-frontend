@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+# LearnHub
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **LearnHub** – Personalized AI-Powered Learning Paths.  
+Craft your own study curriculum with YouTube videos, structured notes, and dynamic summaries in minutes.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🧠 1. Inspiration
 
-### `npm start`
+As developers and students, we often struggled to find structured, high-quality learning resources tailored to our exact needs. Tutorials were too generic. Video playlists were unorganized. PDFs were boring.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+We wanted something smarter.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+LearnHub was built to solve this: a platform that takes your curiosity and instantly turns it into a personalized learning path — complete with chapters, videos, summaries, and study links — powered by AI.
 
-### `npm test`
+No fluff. No chaos. Just structured learning, your way.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 💡 2. What It Does
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+LearnHub generates a complete **learning path** from a single topic input. Here's how it works:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 🧠 **You provide**:
+  - A topic (e.g., “React Hooks” or “Probability Theory”)
+  - Short description
+  - Category (Tech, Math, History, etc.)
+  - Difficulty (Beginner–Advanced)
+  - Tone (Conversational, Educational, etc.)
+  - Number of chapters
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- ⚡ **LearnHub generates**:
+  - 📖 Chapter-wise content with learning objectives, concepts, study notes
+  - 📺 Curated YouTube videos per chapter via real-time API search
+  - 📚 Course overview, summary, time commitment, and recommended links
+  - 🧾 Everything saved to Amazon S3 as JSON and served instantly to the frontend
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🔨 3. How We Built It
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 🖥️ Frontend
+- **React + Bootstrap** for smooth and responsive UI
+- Pages:
+  - `Create Course`: dynamic form with validation and loading state
+  - `Course List`: sorted display of all saved courses with metadata
+  - `Course Detail`: side-by-side chapter viewer with embedded video + notes
+- Toast alerts, conditional navigation, and beautiful button UX
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### ⚙️ Backend
+- **FastAPI (Python)** with structured Pydantic models
+- Prompts generated and passed to **Amazon Bedrock (Claude 3.5 Sonnet)**
+- **YouTube Data API v3** used to get top 3–5 relevant videos per chapter
+- Final structured course is saved to **Amazon S3** under a unique course ID
+- APIs include: `generate-learning-path`, `upload-course-to-s3`, `get-course`, and `list-courses`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🚀 4. Accomplishments We're Proud Of
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- ⚡ Full course generation in under 2 minutes
+- 📚 Real-time YouTube search that adapts per chapter
+- 🎥 Embedded video viewer with auto chapter sync
+- 🔄 Stateless backend using AWS + FastAPI
+- 🧠 Actually used it to learn "LLMs" while commuting — and it worked!
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## ✨ 5. Key Features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- ✅ Fully dynamic curriculum generation via Claude 3.5
+- ✅ Supports multiple tones, difficulty levels, and topics
+- ✅ Embedded YouTube videos based on auto-ranked queries
+- ✅ Study notes are audio-friendly and visually structured
+- ✅ Clean UI/UX with chapter switcher, summaries, and study tips
+- ✅ Responsive frontend with loading states and toast notifications
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🔌 6. Backend API Integration
 
-### Making a Progressive Web App
+| Endpoint | Method | Description |
+|---------|--------|-------------|
+| `/generate-learning-path/` | `POST` | Accepts topic + config and returns a full course object |
+| `/upload-course-to-s3` | `POST` | Saves generated course JSON to S3 |
+| `/get-course/{course_id}` | `GET` | Fetches course data from S3 by ID |
+| `/list-courses/` | `GET` | Returns a list of all saved course IDs |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🧰 7. Built With
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **Frontend**
+  - React
+  - React-Bootstrap
+  - Toast/Spinner/Router DOM
+  - JSX + Styled Components
 
-### Deployment
+- **Backend**
+  - FastAPI (Python)
+  - Pydantic
+  - Boto3
+  - Amazon Bedrock (Claude 3.5)
+  - YouTube Data API
+  - Amazon S3
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Infra / Hosting**
+  - AWS (S3, Bedrock, Polly-ready)
+  - dotenv for config management
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🌱 8. What’s Next for LearnHub
+
+- 🗓️ Calendar View: Estimate weekly study goals based on chapter count
+- 📱 Mobile-first UI: Flutter version under development
+- 🧪 AI-generated quiz questions for each chapter
+- 📈 Completion tracking and "Best Learner" leaderboard
+- 📊 Chapter Visuals: auto-generate diagrams and flowcharts via AI
+- 🌍 Language Support: Hindi, Spanish, Arabic, Telugu & more
+- 🔐 Authentication with Cognito or Firebase
+
+---
+
+Feel free to contribute, suggest features, or fork this repo to build your own personalized learning platform 🚀  
