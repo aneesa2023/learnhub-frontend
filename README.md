@@ -1,6 +1,6 @@
-# StreanStudy
+# StreamStudy
 
-Welcome to **StreanStudy** – Personalized AI-Powered Learning Paths.  
+Welcome to **StreamStudy** – Personalized AI-Powered Learning Paths.  
 Craft your own study curriculum with YouTube videos, structured notes, and dynamic summaries in minutes.
 
 ---
@@ -11,7 +11,7 @@ As developers and students, we often struggled to find structured, high-quality 
 
 We wanted something smarter.
 
-StreanStudy was built to solve this: a platform that takes your curiosity and instantly turns it into a personalized learning path — complete with chapters, videos, summaries, and study links — powered by AI.
+StreamStudy was built to solve this: a platform that takes your curiosity and instantly turns it into a personalized learning path — complete with chapters, videos, summaries, and study links — powered by AI.
 
 No fluff. No chaos. Just structured learning, your way.
 
@@ -19,7 +19,7 @@ No fluff. No chaos. Just structured learning, your way.
 
 ## 💡 2. What It Does
 
-StreanStudy generates a complete **learning path** from a single topic input. Here's how it works:
+StreamStudy generates a complete **learning path** from a single topic input. Here's how it works:
 
 - 🧠 **You provide**:
   - A topic (e.g., “React Hooks” or “Probability Theory”)
@@ -29,7 +29,7 @@ StreanStudy generates a complete **learning path** from a single topic input. He
   - Tone (Conversational, Educational, etc.)
   - Number of chapters
 
-- ⚡ **StreanStudy generates**:
+- ⚡ **StreamStudy generates**:
   - 📖 Chapter-wise content with learning objectives, concepts, study notes
   - 📺 Curated YouTube videos per chapter via real-time API search
   - 📚 Course overview, summary, time commitment, and recommended links
@@ -110,7 +110,7 @@ StreanStudy generates a complete **learning path** from a single topic input. He
 
 ---
 
-## 🌱 8. What’s Next for StreanStudy
+## 🌱 8. What’s Next for StreamStudy
 
 - 🗓️ Calendar View: Estimate weekly study goals based on chapter count
 - 🧪 AI-generated quiz questions for each chapter
