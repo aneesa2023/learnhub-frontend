@@ -1,6 +1,6 @@
-# LearnHub
+# StreanStudy
 
-Welcome to **LearnHub** – Personalized AI-Powered Learning Paths.  
+Welcome to **StreanStudy** – Personalized AI-Powered Learning Paths.  
 Craft your own study curriculum with YouTube videos, structured notes, and dynamic summaries in minutes.
 
 ---
@@ -11,7 +11,7 @@ As developers and students, we often struggled to find structured, high-quality 
 
 We wanted something smarter.
 
-LearnHub was built to solve this: a platform that takes your curiosity and instantly turns it into a personalized learning path — complete with chapters, videos, summaries, and study links — powered by AI.
+StreanStudy was built to solve this: a platform that takes your curiosity and instantly turns it into a personalized learning path — complete with chapters, videos, summaries, and study links — powered by AI.
 
 No fluff. No chaos. Just structured learning, your way.
 
@@ -19,7 +19,7 @@ No fluff. No chaos. Just structured learning, your way.
 
 ## 💡 2. What It Does
 
-LearnHub generates a complete **learning path** from a single topic input. Here's how it works:
+StreanStudy generates a complete **learning path** from a single topic input. Here's how it works:
 
 - 🧠 **You provide**:
   - A topic (e.g., “React Hooks” or “Probability Theory”)
@@ -29,7 +29,7 @@ LearnHub generates a complete **learning path** from a single topic input. Here'
   - Tone (Conversational, Educational, etc.)
   - Number of chapters
 
-- ⚡ **LearnHub generates**:
+- ⚡ **StreanStudy generates**:
   - 📖 Chapter-wise content with learning objectives, concepts, study notes
   - 📺 Curated YouTube videos per chapter via real-time API search
   - 📚 Course overview, summary, time commitment, and recommended links
@@ -110,15 +110,13 @@ LearnHub generates a complete **learning path** from a single topic input. Here'
 
 ---
 
-## 🌱 8. What’s Next for LearnHub
+## 🌱 8. What’s Next for StreanStudy
 
 - 🗓️ Calendar View: Estimate weekly study goals based on chapter count
-- 📱 Mobile-first UI: Flutter version under development
 - 🧪 AI-generated quiz questions for each chapter
 - 📈 Completion tracking and "Best Learner" leaderboard
 - 📊 Chapter Visuals: auto-generate diagrams and flowcharts via AI
 - 🌍 Language Support: Hindi, Spanish, Arabic, Telugu & more
-- 🔐 Authentication with Cognito or Firebase
 
 ---
 
